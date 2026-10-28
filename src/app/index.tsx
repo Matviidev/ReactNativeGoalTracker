@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import { Button, FlatList, StyleSheet, Text, TextInput, View } from 'react-native';
+import { Button, FlatList, StyleSheet, TextInput, View } from 'react-native';
 
+import { GoalItem } from '@/components/goal-item';
 import type { Goal } from '@/types/goal';
 
 export default function GoalsScreen() {
@@ -13,6 +14,10 @@ export default function GoalsScreen() {
       { id: Math.random().toString(), text: enteredText },
     ]);
     setEnteredText('');
+  }
+
+  function handleDeleteGoal(id: string) {
+    setGoals((currentGoals) => currentGoals.filter((goal) => goal.id !== id));
   }
 
   return (
@@ -29,7 +34,7 @@ export default function GoalsScreen() {
       <FlatList
         data={goals}
         keyExtractor={(goal) => goal.id}
-        renderItem={({ item }) => <Text style={styles.goalText}>{item.text}</Text>}
+        renderItem={({ item }) => <GoalItem goal={item} onDelete={handleDeleteGoal} />}
       />
     </View>
   );
@@ -51,9 +56,6 @@ const styles = StyleSheet.create({
     flex: 1,
     borderWidth: 1,
     borderColor: '#cccccc',
-    padding: 8,
-  },
-  goalText: {
     padding: 8,
   },
 });
