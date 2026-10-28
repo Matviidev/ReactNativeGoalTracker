@@ -9,6 +9,7 @@ import { GoalItem } from '@/components/goal-item';
 import { Colors, FontSize, Spacing } from '@/constants/theme';
 import { useGoals } from '@/hooks/use-goals';
 import type { Goal } from '@/types/goal';
+import { confirm } from '@/utils/confirm';
 
 export default function GoalsScreen() {
   const { goals, addGoal, deleteGoal } = useGoals();
@@ -22,7 +23,17 @@ export default function GoalsScreen() {
     closeModal();
   }
 
-  const handleDeleteGoal = useCallback((goal: Goal) => deleteGoal(goal.id), [deleteGoal]);
+  const handleDeleteGoal = useCallback(
+    (goal: Goal) => {
+      confirm({
+        title: 'Delete goal?',
+        message: `"${goal.text}" will be removed.`,
+        confirmText: 'Delete',
+        onConfirm: () => deleteGoal(goal.id),
+      });
+    },
+    [deleteGoal],
+  );
 
   const goalCountLabel = goals.length === 1 ? '1 goal' : `${goals.length} goals`;
 
