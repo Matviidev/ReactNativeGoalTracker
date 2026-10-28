@@ -4,22 +4,18 @@ import { Button, FlatList, StyleSheet, View } from 'react-native';
 import { GoalInput } from '@/components/goal-input';
 import { GoalItem } from '@/components/goal-item';
 import { Colors, Spacing } from '@/constants/theme';
-import type { Goal } from '@/types/goal';
+import { useGoals } from '@/hooks/use-goals';
 
 export default function GoalsScreen() {
+  const { goals, addGoal, deleteGoal } = useGoals();
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [goals, setGoals] = useState<Goal[]>([]);
 
   const openModal = () => setIsModalVisible(true);
   const closeModal = () => setIsModalVisible(false);
 
   function handleAddGoal(text: string) {
-    setGoals((currentGoals) => [...currentGoals, { id: Math.random().toString(), text }]);
+    addGoal(text);
     closeModal();
-  }
-
-  function handleDeleteGoal(id: string) {
-    setGoals((currentGoals) => currentGoals.filter((goal) => goal.id !== id));
   }
 
   return (
@@ -29,7 +25,7 @@ export default function GoalsScreen() {
       <FlatList
         data={goals}
         keyExtractor={(goal) => goal.id}
-        renderItem={({ item }) => <GoalItem goal={item} onDelete={handleDeleteGoal} />}
+        renderItem={({ item }) => <GoalItem goal={item} onDelete={deleteGoal} />}
         alwaysBounceVertical={false}
       />
     </View>
