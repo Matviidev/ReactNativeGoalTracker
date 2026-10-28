@@ -3,6 +3,7 @@ import { FlatList, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { AppButton } from '@/components/app-button';
+import { EmptyState } from '@/components/empty-state';
 import { GoalInput } from '@/components/goal-input';
 import { GoalItem } from '@/components/goal-item';
 import { Colors, FontSize, Spacing } from '@/constants/theme';
@@ -42,7 +43,8 @@ export default function GoalsScreen() {
           <GoalItem goal={item} index={index} onDelete={handleDeleteGoal} />
         )}
         ItemSeparatorComponent={ItemSeparator}
-        contentContainerStyle={styles.list}
+        ListEmptyComponent={EmptyState}
+        contentContainerStyle={[styles.list, goals.length === 0 && styles.listEmpty]}
         alwaysBounceVertical={false}
         showsVerticalScrollIndicator={false}
       />
@@ -76,6 +78,9 @@ const styles = StyleSheet.create({
   },
   list: {
     paddingVertical: Spacing.lg,
+  },
+  listEmpty: {
+    flexGrow: 1,
   },
   separator: {
     height: Spacing.sm,
