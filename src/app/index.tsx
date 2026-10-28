@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import { Button, FlatList, StyleSheet, View } from 'react-native';
+import { FlatList, StyleSheet, View } from 'react-native';
 
+import { AppButton } from '@/components/app-button';
 import { GoalInput } from '@/components/goal-input';
 import { GoalItem } from '@/components/goal-item';
 import { Colors, Spacing } from '@/constants/theme';
@@ -20,7 +21,7 @@ export default function GoalsScreen() {
 
   return (
     <View style={styles.screen}>
-      <Button title="Add New Goal" color={Colors.primary} onPress={openModal} />
+      <AppButton title="Add New Goal" onPress={openModal} />
       <GoalInput visible={isModalVisible} onAddGoal={handleAddGoal} onCancel={closeModal} />
       <FlatList
         data={goals}

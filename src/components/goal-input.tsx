@@ -1,5 +1,8 @@
 import { useState } from 'react';
-import { Button, Image, Modal, StyleSheet, TextInput, View } from 'react-native';
+import { Image, Modal, StyleSheet, TextInput, View } from 'react-native';
+
+import { AppButton } from '@/components/app-button';
+import { Colors, Radius, Spacing } from '@/constants/theme';
 
 const goalImage = require('@/assets/goal.png');
 
@@ -28,12 +31,8 @@ export function GoalInput({ visible, onAddGoal, onCancel }: GoalInputProps) {
           onChangeText={setEnteredText}
         />
         <View style={styles.actions}>
-          <View style={styles.action}>
-            <Button title="Cancel" onPress={onCancel} color="#f31282" />
-          </View>
-          <View style={styles.action}>
-            <Button title="Add Goal" onPress={handleAdd} color="#b180f0" />
-          </View>
+          <AppButton title="Cancel" variant="danger" onPress={onCancel} style={styles.action} />
+          <AppButton title="Add Goal" onPress={handleAdd} style={styles.action} />
         </View>
       </View>
     </Modal>
@@ -45,27 +44,27 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 16,
-    backgroundColor: '#311b6b',
+    padding: Spacing.md,
+    backgroundColor: Colors.background,
   },
   image: {
     width: 100,
     height: 100,
-    margin: 20,
+    margin: Spacing.lg,
   },
   textInput: {
     width: '100%',
-    padding: 16,
-    borderRadius: 6,
-    backgroundColor: '#e4d0ff',
-    color: '#120438',
+    padding: Spacing.md,
+    borderRadius: Radius.sm,
+    backgroundColor: Colors.inputBackground,
+    color: Colors.inputText,
   },
   actions: {
     flexDirection: 'row',
-    marginTop: 16,
+    gap: Spacing.md,
+    marginTop: Spacing.md,
   },
   action: {
-    width: 100,
-    marginHorizontal: 8,
+    minWidth: 120,
   },
 });
