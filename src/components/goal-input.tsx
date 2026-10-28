@@ -12,6 +12,7 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { AppButton } from '@/components/app-button';
+import { GOAL_MAX_LENGTH } from '@/constants/goals';
 import { Colors, FontSize, Radius, Spacing } from '@/constants/theme';
 
 const goalImage = require('@/assets/goal.png');
@@ -24,13 +25,18 @@ type GoalInputProps = {
 
 export function GoalInput({ visible, onAddGoal, onCancel }: GoalInputProps) {
   const [enteredText, setEnteredText] = useState('');
+  const trimmedText = enteredText.trim();
+  const canSubmit = trimmedText.length > 0;
 
   function resetInput() {
     setEnteredText('');
   }
 
   function handleAdd() {
-    onAddGoal(enteredText);
+    if (!canSubmit) {
+      return;
+    }
+    onAddGoal(trimmedText);
     resetInput();
   }
 
@@ -58,9 +64,13 @@ export function GoalInput({ visible, onAddGoal, onCancel }: GoalInputProps) {
             value={enteredText}
             onChangeText={setEnteredText}
             onSubmitEditing={handleAdd}
+            maxLength={GOAL_MAX_LENGTH}
             returnKeyType="done"
             autoFocus
           />
+          <Text style={styles.counter}>
+            {enteredText.length}/{GOAL_MAX_LENGTH}
+          </Text>
           <View style={styles.actions}>
             <AppButton
               title="Cancel"
@@ -71,6 +81,7 @@ export function GoalInput({ visible, onAddGoal, onCancel }: GoalInputProps) {
             <AppButton
               title="Add Goal"
               onPress={handleAdd}
+              disabled={!canSubmit}
               style={styles.action}
             />
           </View>
@@ -110,6 +121,12 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.inputBackground,
     color: Colors.inputText,
     fontSize: FontSize.body,
+  },
+  counter: {
+    alignSelf: 'flex-end',
+    marginTop: Spacing.xs,
+    color: Colors.textMuted,
+    fontSize: FontSize.caption,
   },
   actions: {
     flexDirection: 'row',
