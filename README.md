@@ -4,11 +4,12 @@ A small React Native app for writing down and managing personal goals. Built whi
 
 ## Features
 
-- Add goals through a full-screen modal
+- Add goals through a full-screen modal on native or a centered dialog on web
 - Input validation: empty or whitespace-only goals are rejected, 120 character limit with a live counter
 - Tap a goal to delete it, with a confirmation prompt
 - Empty state when there are no goals
 - Safe-area aware layout and keyboard handling
+- Responsive layout with hover and focus states on web
 
 Goals are kept in memory and reset when the app restarts.
 
@@ -17,6 +18,7 @@ Goals are kept in memory and reset when the app restarts.
 - Expo SDK 57 with Expo Router
 - React Native 0.86, React 19
 - TypeScript (strict)
+- Inter via @expo-google-fonts
 
 ## Getting started
 
@@ -42,5 +44,4 @@ src/
   constants/    theme tokens and app constants
   hooks/        state hooks
   types/        shared types
-  utils/        helpers
 ```
